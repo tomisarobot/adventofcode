@@ -18,6 +18,10 @@ then
     exit 1
 fi
 
+question_dir="$(question_dir $day)"
+
+mkdir -p "$question_dir"
+
 question_file="$(question_file $day)"
 
 if [ -f "$question_file" ]
