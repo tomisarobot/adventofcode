@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+set -eEu -o pipefail
+script_path="${BASH_SOURCE[0]}"
+script_dir="$(cd "$(dirname "$script_path")" && pwd)"
+
+AOC_ROOT="$script_dir"
+
+day_sortable() {
+    day=$1
+    prefix=$([ "$day" -lt "10" ] && echo "0" || echo "")
+    echo "day${prefix}${day}"
+}
+
+question_dir() {
+    day=$1
+    echo "question-files/$(day_sortable $day)"
+}
+
+question_file() {
+    day=$1
+    echo "$(question_dir $day)/official.question"
+}
+
+if [ -f "$script_path.overrides" ]
+then
+    source "$script_path.overrides"
+fi
