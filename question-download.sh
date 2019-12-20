@@ -28,7 +28,7 @@ if [ -f "$question_file" ]
 then
     >&2 echo "$question_file already exists"
 else
-    curl "https://adventofcode.com/2019/day/$day/input" \
+    curl -s "https://adventofcode.com/2019/day/$day/input" \
         -H "authority: adventofcode.com" \
         -H "cache-control: max-age=0" \
         -H "upgrade-insecure-requests: 1" \
