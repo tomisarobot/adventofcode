@@ -29,15 +29,15 @@ question_dir="$(question_dir $day $year)"
 
 mkdir -p "$question_dir"
 
-question_name="official-$AOC_USERNAME"
+question_name="official"
 
-question_file="$(question_file $day $year "$question_name")"
+question_file="$(question_file $day $year $question_name)"
 
 if [ -f "$question_file" ]
 then
     >&2 echo "$question_file already exists"
 else
-    curl -s "https://adventofcode.com/2019/day/$day/input" \
+    curl -s "https://adventofcode.com/$year/day/$day/input" \
         -H "authority: adventofcode.com" \
         -H "cache-control: max-age=0" \
         -H "upgrade-insecure-requests: 1" \

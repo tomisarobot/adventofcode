@@ -1,3 +1,7 @@
 #!/usr/bin/env bash
+
+# Require for downloading question files
 AOC_COOKIE='_ga=GA1...; _gid=...; session=...; _gat=...'
-AOC_USERNAME=your-name-here
+
+# Set this to make your repo support multiple friends
+# AOC_USERNAME=your-name-here

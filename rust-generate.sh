@@ -17,22 +17,21 @@ then
     exit 1
 fi
 
-solution_dir="$(solution_dir)"
+example_dir="$(example_dir $day $year)"
+question_dir="$(question_dir $day $year)"
+
+solution_dir="$(solution_dir $year)"
+program_dir="$(day_sortable $day)_rust"
 
 mkdir -p "$solution_dir"
 
-program_dir="$(day_sortable $day $year)_rust"
-
-if [ -d "$program_dir" ]
+if [ -d "$solution_dir/$program_dir" ]
 then
     >&2 echo "$program_dir already exists"
     exit 1
 fi
 
-sh question-download.sh $day
-
-question_dir="$(question_dir $day $year)"
-question_file="$(question_file $day $year)"
+sh question-download.sh $day $year
 
 (cd "$solution_dir"
 cargo new "$program_dir" --name program
@@ -40,7 +39,12 @@ cargo new "$program_dir" --name program
 
 echo 'structopt = "0.3.5"' >> "$solution_dir/$program_dir/Cargo.toml"
 
+shopt -s dotglob
 rsync -a rust-files/* $solution_dir/$program_dir/
 rsync -a $question_dir/* $solution_dir/$program_dir/
+if [ -d "$example_dir" ]
+then
+    rsync -a $example_dir/* $solution_dir/$program_dir/
+fi
 
 )

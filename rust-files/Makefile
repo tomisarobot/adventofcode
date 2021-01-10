@@ -1,7 +1,10 @@
 test: official
 
+example:
+	bash program-test.sh example.question example
+
 %: %.question build
-	bash program-test.sh $*.question $*.question.result
+	bash program-test.sh $*.question
 
 build:
 	cargo build

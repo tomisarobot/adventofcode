@@ -1,20 +1,35 @@
 #!/usr/bin/env bash
 set -eEu -o pipefail
 (cd "$(dirname "${BASH_SOURCE[0]}")"
-    question_file=$1
-    solution_file=${2:-}
 
-    result_file="$question_file.result"
+program_run () {
+    question_file="$1"
+    part="$2"
+    answer_file="$question_file.$part.answer"
+    result_file="$question_file.$part.result"
 
-    target/debug/program "$question_file" | tee "$result_file"
+    sh program-run.sh "$question_file" "$part" | tee "$result_file"
 
-    if [ -f "$solution_file" ]
+    if [ -f "$answer_file" ] && [ ! -s "$result_file" ]
     then
         if [ "$(which colordiff)" != "" ]
         then
-            diff "$solution_file" "$result_file" | colordiff
+            diff "$answer_file" "$result_file" | colordiff
         else
-            diff "$solution_file" "$result_file"
+            diff "$answer_file" "$result_file"
         fi
     fi
+}
+
+question_file="$1"
+part_override="${2:-}"
+
+if [ "$part_override" != "" ]
+then
+    program_run "$question_file" "$part_override"
+else
+    program_run "$question_file" 'part1'
+    program_run "$question_file" 'part2'
+fi
+
 )
