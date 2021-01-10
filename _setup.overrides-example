@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
 AOC_COOKIE='_ga=GA1...; _gid=...; session=...; _gat=...'
+AOC_USERNAME=your-name-here

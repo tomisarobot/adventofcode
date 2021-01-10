@@ -4,6 +4,7 @@ script_path="${BASH_SOURCE[0]}"
 script_dir="$(cd "$(dirname "$script_path")" && pwd)"
 
 AOC_ROOT="$script_dir"
+AOC_USERNAME='AOC_USERNAME-not-set'
 
 day_sortable() {
     day=$1
@@ -11,14 +12,21 @@ day_sortable() {
     echo "day${prefix}${day}"
 }
 
+solution_dir() {
+    echo "solutions-$AOC_USERNAME"
+}
+
 question_dir() {
     day=$1
-    echo "question-files/$(day_sortable $day)"
+    year=$2
+    echo "question-files/$year/$(day_sortable $day)"
 }
 
 question_file() {
     day=$1
-    echo "$(question_dir $day)/official.question"
+    year=$2
+    question_name=$3
+    echo "$(question_dir $day $year)/$question_name.question"
 }
 
 if [ -f "$script_path.overrides" ]

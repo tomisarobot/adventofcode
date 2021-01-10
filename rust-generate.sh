@@ -3,14 +3,25 @@ set -eEu -o pipefail
 (cd "$(dirname "${BASH_SOURCE[0]}")"; source './_setup'
 
 day=$1
+year=$2
 
 if ! [[ "$day" =~ ^[0-9]+$ ]]
 then
-    >&2 echo "${BASH_SOURCE[0]} <day>"
+    >&2 echo "${BASH_SOURCE[0]} <day> <year>"
     exit 1
 fi
 
-program_dir="$(day_sortable $day)_rust"
+if ! [[ "$year" =~ ^[0-9]+$ ]]
+then
+    >&2 echo "${BASH_SOURCE[0]} <day> <year>"
+    exit 1
+fi
+
+solution_dir="$(solution_dir)"
+
+mkdir -p "$solution_dir"
+
+program_dir="$(day_sortable $day $year)_rust"
 
 if [ -d "$program_dir" ]
 then
@@ -20,14 +31,16 @@ fi
 
 sh question-download.sh $day
 
-question_dir="$(question_dir $day)"
-question_file="$(question_file $day)"
+question_dir="$(question_dir $day $year)"
+question_file="$(question_file $day $year)"
 
+(cd "$solution_dir"
 cargo new "$program_dir" --name program
+)
 
-echo 'structopt = "0.3.5"' >> "$program_dir/Cargo.toml"
+echo 'structopt = "0.3.5"' >> "$solution_dir/$program_dir/Cargo.toml"
 
-rsync -a rust-files/* $program_dir/
-rsync -a $question_dir/* $program_dir/
+rsync -a rust-files/* $solution_dir/$program_dir/
+rsync -a $question_dir/* $solution_dir/$program_dir/
 
 )

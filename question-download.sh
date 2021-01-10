@@ -3,10 +3,17 @@ set -eEu -o pipefail
 (cd "$(dirname "${BASH_SOURCE[0]}")"; source './_setup'
 
 day=$1
+year=$2
 
 if ! [[ "$day" =~ ^[0-9]+$ ]]
 then
     >&2 echo "${BASH_SOURCE[0]} <day>"
+    exit 1
+fi
+
+if ! [[ "$year" =~ ^[0-9]+$ ]]
+then
+    >&2 echo "${BASH_SOURCE[0]} <day> <year>"
     exit 1
 fi
 
@@ -18,11 +25,13 @@ then
     exit 1
 fi
 
-question_dir="$(question_dir $day)"
+question_dir="$(question_dir $day $year)"
 
 mkdir -p "$question_dir"
 
-question_file="$(question_file $day)"
+question_name="official-$AOC_USERNAME"
+
+question_file="$(question_file $day $year "$question_name")"
 
 if [ -f "$question_file" ]
 then

@@ -1,7 +1,7 @@
 test: official
 
 %: %.question build
-	bash program-test.sh $*.question $*.solution
+	bash program-test.sh $*.question $*.question.result
 
 build:
 	cargo build
