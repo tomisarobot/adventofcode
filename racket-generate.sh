@@ -21,7 +21,7 @@ example_dir="$(example_dir $day $year)"
 question_dir="$(question_dir $day $year)"
 
 solution_dir="$(solution_dir $year)"
-program_dir="$(day_sortable $day)_rust"
+program_dir="$(day_sortable $day)_racket"
 
 mkdir -p "$solution_dir"
 

@@ -10,13 +10,13 @@ program_run () {
 
     sh program-run.sh "$question_file" "$part" | tee "$result_file"
 
-    if [ -f "$answer_file" ] && [ ! -s "$result_file" ]
+    if [ -f "$answer_file" ] && [ -s "$result_file" ]
     then
         if [ "$(which colordiff)" != "" ]
         then
-            diff "$answer_file" "$result_file" | colordiff
+            diff "$result_file" "$answer_file" | colordiff
         else
-            diff "$answer_file" "$result_file"
+            diff "$result_file" "$answer_file"
         fi
     fi
 }
