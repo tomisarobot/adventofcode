@@ -1,6 +1,6 @@
 test: official
 
-example:
+example: build
 	bash program-test.sh example.question example
 
 %: %.question build
